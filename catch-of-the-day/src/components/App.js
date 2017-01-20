@@ -4,6 +4,7 @@ import Order from './Order';
 import Inventory from './Inventory';
 import Fish from './Fish';
 import sampleFishes from '../sample-fishes';
+import base from '../base';
 
 class App extends React.Component {
   constructor() {
@@ -19,6 +20,19 @@ class App extends React.Component {
       order: {},
     };
   }
+
+  componentWillMount() {
+    this.ref = base.syncState(`${this.props.params.storeId}/fishes`
+    , {
+      context: this,
+      state: 'fishes'
+    });
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
+
   addFish(fish) {
     // update state
     const fishes = {...this.state.fishes};
@@ -58,7 +72,7 @@ class App extends React.Component {
             }
           </ul>
         </div>
-        <Order />
+        <Order fishes={this.state.fishes} order={this.state.order} />
         <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
         { /* passing down the function from the App component through the inventory component to a child component a couple levels deep */ }
 
