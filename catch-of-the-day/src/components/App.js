@@ -127,6 +127,7 @@ class App extends React.Component {
           removeFish={this.removeFish}
           loadSamples={this.loadSamples} fishes={this.state.fishes}
           updateFish={this.updateFish}
+          storeId={this.props.params.storeId}
         />
 
         { /* passing down the function from the App component through the inventory component to a child component a couple levels deep */ }
